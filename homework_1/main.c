@@ -16,14 +16,18 @@ int main(){
 			printf("Уравненние не имеет действительных корней");
 			return 0;
 		};
-		printf("Решения уравнения - %f, %f", -1*sqrt((-1*c/a)), sqrt((-1*c/a)));
+		printf("Решения уравнения - %f, %f\n", -1*sqrt((double) -1*c / (double) a), sqrt((double) -1*c / (double) a));
 		return 0;
 	};
 	if(c==0){
 		printf("Решения уравнения - 0, %d", -1*b/a);
 		return 0;
 	};
-
+    
+    if(c%a != 0 & b%a != 0){
+        printf("Уравнение не имеет целых корней");
+        return 0;
+    };
 	n = c/a;
 	k = b/a;
 	for(int i=1; i <= sqrt(abs(n)); i++){

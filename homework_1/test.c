@@ -1,7 +1,9 @@
 #include<stdio.h>
+#include<math.h>
+#include<stdlib.h>
 
 int main(){
-	int a = 5;
+	int a = -9;
 	int b = 2;
-	printf("%d", a/b);
+	printf("%f", sqrt((double) abs(a) / (double) b));
 }
