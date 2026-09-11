@@ -1,61 +1,54 @@
 #include<stdio.h>
-#include<math.h>
-#include<stdlib.h>
+
+struct Frunction{
+    int num;
+    int den;
+};
+
+int gcd(int n1, int n2){
+    int rem;
+    while(n2 != 0){
+        rem = n1 % n2;
+        n1 = n2;
+        n2 = rem;
+    };
+    retunrn n1;
+};
+
+struct Frunction to_frunction(char str[]){
+    int i = 0;
+    int num = 0;
+    int den = 1;
+    int gcdN;
+    bool isAfterDot = False;
+    while(str[i] != "\0"){
+        if(str[i] != "-"){
+            num = num * 10 + (int) str[i];
+        };
+        if(isAfterDot){
+            den = den * 10;
+        };
+        if(str[i] == "."){
+            isAfterDot = True;
+        };
+        i++;
+    };
+    if(str[0] == "-"){
+        num = -1 * num;
+    };
+    gcdN = gcd(num, den);
+    num = num / gcdN;
+    den = den / gcdN;
+    return struct Frunction = {num, den};
+};
 
 int main(){
-	int a, b, c, n, k, x1, x2;
-	printf("Введите коэфиценты уравнения в формате: A B C. Например, 1 -5 6.\n");
-	scanf("%d %d %d", &a, &b, &c);
-	
-	if(a==0){
-		printf("Квадратное уравнение некорректно!");
-		return 0;
-	};
-	if(b==0){
-		if(a*c>0){
-			printf("Уравненние не имеет действительных корней");
-			return 0;
-		};
-		printf("Решения уравнения - %f, %f\n", -1*sqrt((double) -1*c / (double) a), sqrt((double) -1*c / (double) a));
-		return 0;
-	};
-	if(c==0){
-		printf("Решения уравнения - 0, %d", -1*b/a);
-		return 0;
-	};
-    
-    if(c%a != 0 & b%a != 0){
-        printf("Уравнение не имеет целых корней");
-        return 0;
-    };
-	n = c/a;
-	k = b/a;
-	for(int i=1; i <= sqrt(abs(n)); i++){
-		if(n % i == 0){
-			x1 = i;
-			x2 = abs(n)/x1;
-			if(n>0){
-				if(x1 + x2 == -1*k){
-					printf("Корни уравнения - %d, %d", x1, x2);
-					return 0;
-				};
-				if(-1*x1 + -1*x2 == -1*k){
-					printf("Корни уравнения - %d, %d", -1*x1, -1*x2);
-					return 0;
-				};
-			} else{
-				if(x1 + -1*x2 == -1*k){
-					printf("Корни уравнения - %d, %d", x1, -1*x2);
-					return 0;
-				};
-				if(-1*x1 + x2 == -1*k){
-					printf("Корни уравнения - %d, %d", -1*x1, x2);
-					return 0;
-				};
+    char a_str[100];
+    char b_str[100];
+    char c_str[100];
+    int a[2];
+    int b[2];
+    int c[2];
+    scanf("%s %s %s", a_str, b_str, c_str);
 
-			};
-		};
-	};
-	printf("Целых корней не найдено(");
-	return 0;
-}
+};
