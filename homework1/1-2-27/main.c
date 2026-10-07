@@ -1,6 +1,7 @@
-#include<stdio.h>
+#include <stdio.h>
 
-int main(){
+int main()
+{
     int sequence_len;
     int first_min_element_index;
     int last_min_element_index;
@@ -9,23 +10,29 @@ int main(){
     int i = 0;
 
     printf("Введите натуральное число n, количество элементов последовательности:\n");
-    scanf("%d", &sequence_len);
+    if (scanf("%d", &sequence_len) == 0 || sequence_len < 1) {
+        printf("Некорректный ввод");
+        return 1;
+    }
 
-    for(i; i < sequence_len; i++){
-        printf("Введите элемент %d: ", i+1);
-        scanf("%lf", &current);
+    for (i; i < sequence_len; i++) {
+        printf("Введите элемент %d: ", i + 1);
+        if (scanf("%lf", &current) == 0) {
+            printf("Некорректный ввод");
+            return 1;
+        }
 
-        if(i == 0){
+        if (i == 0) {
             min = current;
-            first_min_element_index = i+1;
-            last_min_element_index = i+1;
-        } else{
-            if(current < min){
+            first_min_element_index = i + 1;
+            last_min_element_index = i + 1;
+        } else {
+            if (current < min) {
                 min = current;
-                first_min_element_index = i+1;
+                first_min_element_index = i + 1;
             }
-            if(current == min){
-                last_min_element_index = i+1;
+            if (current == min) {
+                last_min_element_index = i + 1;
             }
         }
     }

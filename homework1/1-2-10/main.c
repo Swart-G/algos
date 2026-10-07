@@ -1,19 +1,26 @@
 #include <stdio.h>
 
-int main() {
+int main()
+{
     int count;
     int even_count = 0;
     int odd_count = 0;
     int current;
     int i = 0;
     printf("Введите натуральное число n, количество элементов последовательности:\n");
-    scanf("%d", &count);
-    for(i; i < count; i++){
-        printf("Введите элемент %d: ", i+1);
-        scanf("%d", &current);
-        if(current % 2 == 0){
+    if (scanf("%d", &count) == 0 || count < 1) {
+        printf("Некорректный ввод");
+        return 1;
+    }
+    for (i; i < count; i++) {
+        printf("Введите элемент %d: ", i + 1);
+        if (scanf("%d", &current) == 0) {
+            printf("Некорректный ввод");
+            return 1;
+        }
+        if (current % 2 == 0) {
             even_count += 1;
-        } else{
+        } else {
             odd_count += 1;
         }
     }

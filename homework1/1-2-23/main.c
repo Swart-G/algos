@@ -1,6 +1,7 @@
-#include<stdio.h>
+#include <stdio.h>
 
-int main(){
+int main()
+{
     int sequence_len;
     double x_num;
     double current;
@@ -8,17 +9,26 @@ int main(){
     int last_equal_element_index = -1;
 
     printf("Введите число X:\n");
-    scanf("%lf", &x_num);
+    if (scanf("%lf", &x_num) == 0) {
+        printf("Некорректный ввод");
+        return 1;
+    }
 
     printf("Введите натуральное число n, количество элементов последовательности:\n");
-    scanf("%d", &sequence_len);
+    if (scanf("%d", &sequence_len) == 0 || sequence_len < 1) {
+        printf("Некорректный ввод");
+        return 1;
+    }
 
-    for(i; i < sequence_len; i++){
-        printf("Введите элемент %d: ", i+1);
-        scanf("%lf", &current);
+    for (i; i < sequence_len; i++) {
+        printf("Введите элемент %d: ", i + 1);
+        if (scanf("%lf", &current) == 0) {
+            printf("Некорректный ввод");
+            return 1;
+        }
 
-        if(current == x_num){
-            last_equal_element_index = i+1;
+        if (current == x_num) {
+            last_equal_element_index = i + 1;
         }
     }
 
