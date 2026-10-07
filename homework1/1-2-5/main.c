@@ -1,15 +1,19 @@
 #include <stdio.h>
 
 int main() {
-    int n;
-    double x, sum = 0, sq_sum = 0;
+    int count;
+    double current;
+    double sum = 0;
+    double sq_sum = 0;
+    int i = 0;
     printf("Введите натуральное число n, количество элементов последовательности:\n");
-    scanf("%d", &n);
-    for(int i = 0; i < n; i++){
+    scanf("%d", &current);
+    for(i; i < count; i++){
         printf("Введите элемент %d: ", i+1);
-        scanf("%lf", &x);
-        sum += x;
-        sq_sum += x * x;
+        scanf("%lf", &current);
+        sum += current;
+        sq_sum += current * current;
     }
-    printf("Дисперсия последовательности: %f\n", sq_sum / n - (sum / n) * (sum / n));
+    printf("Дисперсия последовательности: %f\n", sq_sum / current - (sum / current) * (sum / current));
+    return 0;
 }
