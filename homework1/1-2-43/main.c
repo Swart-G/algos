@@ -1,6 +1,8 @@
+#include <math.h>
 #include<stdio.h>
 
 int main(){
+    const double EPS = 1e-12;
     int sequence_len;
     int segment_len;
     int current_segment_len = 1;
@@ -10,30 +12,30 @@ int main(){
     double current;
 
     printf("Введите натуральное число n, минимальную длину искомых участков:\n");
-    if (scanf("%d", &segment_len) == 0 || segment_len < 1) {
+    if (scanf("%d", &segment_len) != 1 || segment_len < 1) {
         printf("Некорректный ввод");
         return 1;
     }
     printf("Введите натуральное количество элементов последовательности:\n");
-    if (scanf("%d", &sequence_len) == 0 || sequence_len < 1) {
+    if (scanf("%d", &sequence_len) != 1 || sequence_len < 1) {
         printf("Некорректный ввод");
         return 1;
     }
     printf("Введите элемент 1: ");
-    if (scanf("%lf", &current) == 0) {
+    if (scanf("%lf", &current) != 1) {
         printf("Некорректный ввод");
         return 1;
     }
 
-    for (i; i < sequence_len; i++) {
+    for (; i < sequence_len; i++) {
         previous = current;
         printf("Введите элемент %d: ", i+1);
-        if (scanf("%lf", &current) == 0) {
+        if (scanf("%lf", &current) != 1) {
             printf("Некорректный ввод");
             return 1;
         }
 
-        if (current == previous) {
+        if (fabs(current - previous) < EPS) {
             current_segment_len++;
         } else {
             if (current_segment_len >= segment_len) {

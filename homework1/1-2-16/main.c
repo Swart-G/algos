@@ -10,14 +10,14 @@ int main()
     int last_element_index = -1;
 
     printf("Введите натуральное число n, количество элементов последовательности:\n");
-    if (scanf("%d", &sequence_len) == 0 || sequence_len < 1) {
+    if (scanf("%d", &sequence_len) != 1 || sequence_len < 1) {
         printf("Некорректный ввод");
         return 1;
     }
 
-    for (i; i < sequence_len; i++) {
+    for (; i < sequence_len; i++) {
         printf("Введите элемент %d: ", i + 1);
-        if (scanf("%d", &current) == 0) {
+        if (scanf("%d", &current) != 1) {
             printf("Некорректный ввод");
             return 1;
         }

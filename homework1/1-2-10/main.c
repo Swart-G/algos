@@ -8,13 +8,13 @@ int main()
     int current;
     int i = 0;
     printf("Введите натуральное число n, количество элементов последовательности:\n");
-    if (scanf("%d", &count) == 0 || count < 1) {
+    if (scanf("%d", &count) != 1 || count < 1) {
         printf("Некорректный ввод");
         return 1;
     }
-    for (i; i < count; i++) {
+    for (; i < count; i++) {
         printf("Введите элемент %d: ", i + 1);
-        if (scanf("%d", &current) == 0) {
+        if (scanf("%d", &current) != 1) {
             printf("Некорректный ввод");
             return 1;
         }
