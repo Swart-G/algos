@@ -1,9 +1,6 @@
-#include <math.h>
 #include <stdio.h>
 
-int main()
-{
-    const double EPS = 1e-12;
+int main() {
     int sequence_len;
     int count = 0;
     double min;
@@ -25,11 +22,11 @@ int main()
         if (i == 0) {
             min = current;
             count++;
-        } else if (current < min && fabs(current - min) >= EPS) {
-             min = current;
-             count = 1;
-        } else if (fabs(current - min) < EPS) {
-             count++;
+        } else if (current < min) {
+            min = current;
+            count = 1;
+        } else if (current == min) {
+            count++;
         }
     }
 

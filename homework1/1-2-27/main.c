@@ -1,9 +1,6 @@
-#include <math.h>
 #include <stdio.h>
 
-int main()
-{
-    const double EPS = 1e-12;
+int main() {
     int sequence_len;
     int first_min_element_index;
     int last_min_element_index;
@@ -28,14 +25,12 @@ int main()
             min = current;
             first_min_element_index = i + 1;
             last_min_element_index = i + 1;
-        } else {
-            if (current < min && fabs(current - min) >= EPS) {
-                min = current;
-                first_min_element_index = i + 1;
-            }
-            if (fabs(current - min) < EPS) {
-                last_min_element_index = i + 1;
-            }
+        } else if (current < min) {
+            min = current;
+            first_min_element_index = i + 1;
+            last_min_element_index = i + 1;
+        } else if (current == min) {
+            last_min_element_index = i + 1;
         }
     }
 

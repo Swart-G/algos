@@ -1,8 +1,8 @@
 #include <math.h>
-#include<stdio.h>
-#include<stdbool.h>
+#include <stdio.h>
+#include <stdbool.h>
 
-int main(){
+int main() {
     const double EPS = 1e-12;
     int sequence_len;
     bool is_arithmetic_sequence = true;
@@ -17,16 +17,16 @@ int main(){
         return 1;
     }
 
-    if (sequence_len == 1) {
-        printf("Последовательность является арифметической прогрессией");
-        return 0;
-    }
-
     printf("Введите элемент 1: ");
     if (scanf("%lf", &previous) != 1) {
         printf("Некорректный ввод");
         return 1;
     }
+    if (sequence_len == 1) {
+        printf("Последовательность является арифметической прогрессией");
+        return 0;
+    }
+
     printf("Введите элемент 2: ");
     if (scanf("%lf", &current) != 1) {
         printf("Некорректный ввод");
@@ -36,7 +36,7 @@ int main(){
 
     for (; i < sequence_len; i++) {
         previous = current;
-        printf("Введите элемент %d: ", i+1);
+        printf("Введите элемент %d: ", i + 1);
         if (scanf("%lf", &current) != 1) {
             printf("Некорректный ввод");
             return 1;

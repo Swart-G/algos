@@ -1,8 +1,6 @@
 #include <stdio.h>
 
-int main()
-{
-
+int main() {
     int sequence_len;
     int count = 0;
     int current;
@@ -22,9 +20,9 @@ int main()
             return 1;
         }
 
-        if (current % 5 == 0 && current % 1000 != current) {
+        if (current % 5 == 0 && (current <= -1000 || current >= 1000)) {
             count += 1;
-            last_element_index = i+1;
+            last_element_index = i + 1;
         }
     }
 

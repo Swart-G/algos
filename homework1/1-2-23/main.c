@@ -1,14 +1,11 @@
 #include <stdio.h>
-#include <math.h>
 
-int main()
-{
+int main() {
     int sequence_len;
     double x_num;
     double current;
     int i = 0;
     int last_equal_element_index = -1;
-    const double EPS = 1e-12;
 
     printf("Введите число X:\n");
     if (scanf("%lf", &x_num) != 1) {
@@ -29,7 +26,7 @@ int main()
             return 1;
         }
 
-        if (fabs(current - x_num) < EPS) {
+        if (current == x_num) {
             last_equal_element_index = i + 1;
         }
     }

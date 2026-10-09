@@ -1,7 +1,6 @@
 #include <stdio.h>
 
-int main()
-{
+int main() {
     int count;
     int even_count = 0;
     int odd_count = 0;

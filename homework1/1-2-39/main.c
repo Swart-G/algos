@@ -1,7 +1,6 @@
-#include<stdio.h>
-#include<stdbool.h>
+#include <stdio.h>
 
-int main(){
+int main() {
     int sequence_len;
     double previous;
     double current;
@@ -21,7 +20,7 @@ int main(){
     }
 
     for (; i < sequence_len; i++) {
-        printf("Введите элемент %d: ", i+1);
+        printf("Введите элемент %d: ", i + 1);
         if (scanf("%lf", &current) != 1) {
             printf("Некорректный ввод");
             return 1;
@@ -33,6 +32,6 @@ int main(){
         previous = current;
     }
 
-    printf("Количество уникальных членов последовательност: %d\n", count);
+    printf("Количество уникальных членов последовательности: %d\n", count);
     return 0;
 }

@@ -1,7 +1,6 @@
 #include <stdio.h>
 
-int main()
-{
+int main() {
     int sequence_len;
     int first_max_element_index;
     double max;
@@ -24,11 +23,9 @@ int main()
         if (i == 0) {
             max = current;
             first_max_element_index = i + 1;
-        } else {
-            if (current > max) {
-                max = current;
-                first_max_element_index = i + 1;
-            }
+        } else if (current > max) {
+            max = current;
+            first_max_element_index = i + 1;
         }
     }
 

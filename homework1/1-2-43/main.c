@@ -1,8 +1,6 @@
-#include <math.h>
-#include<stdio.h>
+#include <stdio.h>
 
-int main(){
-    const double EPS = 1e-12;
+int main() {
     int sequence_len;
     int segment_len;
     int current_segment_len = 1;
@@ -29,13 +27,13 @@ int main(){
 
     for (; i < sequence_len; i++) {
         previous = current;
-        printf("Введите элемент %d: ", i+1);
+        printf("Введите элемент %d: ", i + 1);
         if (scanf("%lf", &current) != 1) {
             printf("Некорректный ввод");
             return 1;
         }
 
-        if (fabs(current - previous) < EPS) {
+        if (current == previous) {
             current_segment_len++;
         } else {
             if (current_segment_len >= segment_len) {
