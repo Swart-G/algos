@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int main() {
+int main()  {
     int count;
     double current;
     double sum = 0;
