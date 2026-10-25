@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
 int main() {
     int sequence_len;
@@ -8,8 +7,6 @@ int main() {
     int i, j;
 
     double current;
-
-    bool is_unique;
 
     printf("Введите натуральное число n, количество элементов последовательности:\n");
     if (scanf("%d", &sequence_len) != 1 || sequence_len < 1) {
@@ -30,22 +27,25 @@ int main() {
             return 1;
         }
 
-        is_unique = true;
         for (j = 0; j < i; j++) {
             if (arr[j] == current) {
-                is_unique = false;
                 break;
             }
         }
-        if (is_unique) {
+        if (j!=i) {
             unique_count++;
         }
 
         arr[i] = current;
     }
 
-    free(arr);
+    // realloc(arr...);
 
     printf("Количество уникальных членов последовательности: %d\n", unique_count);
+    for (i = 0; i < sequence_len; i++) {
+        printf("%.20lf\n", arr[i]);
+    }
+
+    free(arr);
     return 0;
 }
