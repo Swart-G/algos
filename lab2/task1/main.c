@@ -1,36 +1,46 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
-#include "reverse_array.h"
-
+#include "array.h"
 
 int main() {
     int arr_len;
-    int current;
     printf("Введите длину массива:\n");
 
     if (scanf("%d", &arr_len) != 1) {
-        printf("Некорректный ввод");
+        printf("Некорректный ввод\n");
         return EIO;
+    } else if (arr_len <= 0) {
+        printf("Некорректный аргумент\n");
+        return EINVAL;
     }
 
     int* arr = (int*) malloc(arr_len * sizeof(int));
-    for (int i = 0; i < arr_len; i++) {
-        printf("Введите %d член массива:\n", i+1);
-        if (scanf("%d", &current) != 1) {
-            printf("Некорректный ввод");
-            return EIO;
-        }
-        arr[i] = current;
+    if (arr == NULL) {
+        printf("Ошибка выделения памяти\n");
+
+        return ENOMEM;
+    }
+
+    if (scan_array(arr, arr_len) != 0) {
+        printf("Ошибка чтения массива\n");
+
+        free(arr);
+        return EIO;
     }
 
     if (reverse_array(arr, arr_len) != 0) {
-        printf("Ошибка reverse");
+        printf("Ошибка разворота\n");
+
+        free(arr);
         return 1;
     }
 
-    for (int i = 0; i < arr_len; i++) {
-        printf("%d ", arr[i]);
+    if (print_array(arr, arr_len) != 0) {
+        printf("Ошибка вывода массива\n");
+
+        free(arr);
+        return EIO;
     }
 
     free(arr);

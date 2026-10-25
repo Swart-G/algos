@@ -1,11 +1,11 @@
-out: main.o reverse_array.o
-	gcc main.o reverse_array.o -o out
+out: main.o array.o
+	gcc main.o array.o -o out
 
-main.o: main.c reverse_array.h
+main.o: main.c array.h
 	gcc main.c -c
 
-reverse_array.o: reverse_array.c
-	gcc reverse_array.c -c
+array.o: array.c array.h
+	gcc array.c -c
 
 run: out
 	./out
