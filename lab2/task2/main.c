@@ -4,55 +4,59 @@
 #include "array.h"
 
 int main() {
-    int arr_len;
+    int size;
     int shift_step;
 
     printf("Введите длину массива:\n");
-    if (scanf("%d", &arr_len) != 1) {
-        printf("Некорректный ввод\n");
+    if (scanf("%d", &size) != 1) {
+        printf("Некорректный ввод: %d\n", EIO);
         return EIO;
-    } else if (arr_len <= 0) {
-        printf("Некорректный аргумент\n");
+    } else if (size <= 0) {
+        printf("Некорректный аргумент: %d\n", EINVAL);
         return EINVAL;
     }
 
-    int* arr = (int*) malloc(arr_len * sizeof(int));
-    if (arr == NULL) {
-        printf("Ошиба выделения памяти\n");
+    int* array = (int*) malloc(size * sizeof(int));
+    if (array == NULL) {
+        printf("Ошибка выделения памяти: %d\n", ENOMEM);
 
         return ENOMEM;
     }
 
-    if (scan_array(arr, arr_len) != 0) {
-        printf("Ошибка чтения массива\n");
+    int err = scan_array(array, size);
+    if (err != 0) {
+        printf("Ошибка чтения массива: %d\n", err);
 
-        free(arr);
-        return EIO;
+        free(array);
+        return err;
     }
 
     printf("Введите шаг сдвига массива:\n");
     if (scanf("%d", &shift_step) != 1) {
-        printf("Некорректный ввод\n");
+        printf("Некорректный ввод: %d\n", EIO);
 
-        free(arr);
+        free(array);
         return EIO;
     }
 
-    if (shift_array(arr, arr_len, shift_step) != 0) {
-        printf("Ошибка сдвига\n");
+    err = shift_array(array, size, shift_step);
+    if (err != 0) {
+        printf("Ошибка сдвига: %d\n", err);
 
-        free(arr);
-        return 1;
+        free(array);
+        return err;
     }
 
-    if (print_array(arr, arr_len) != 0) {
-        printf("Ошибка вывода массива\n");
+    printf("Массив после циклического сдвига:\n");
+    err = print_array(array, size);
+    if (err != 0) {
+        printf("Ошибка вывода массива: %d\n", err);
 
-        free(arr);
-        return EIO;
+        free(array);
+        return err;
     }
 
-    free(arr);
+    free(array);
 
     return 0;
 }

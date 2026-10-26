@@ -3,30 +3,30 @@
 #include <errno.h>
 #include "array.h"
 
-int print_array(int *array, int length) {
-    if (array == NULL || length <= 0) {
+int print_array(int *array, int size) {
+    if (array == NULL || size <= 0) {
         return EINVAL;
     }
 
     int i;
-    for (i = 0; i < length; i++) {
-        if (printf("%d ", array[i]) != 0) {
+    for (i = 0; i < size; i++) {
+        if (printf("%d ", array[i]) < 0) {
             return EIO;
         }
     }
-    if (printf("\n") != 0) {
+    if (printf("\n") < 0) {
         return EIO;
     }
     return 0;
 }
 
-int scan_array(int *array, int length) {
-    if (array == NULL || length <= 0) {
+int scan_array(int *array, int size) {
+    if (array == NULL || size <= 0) {
         return EINVAL;
     }
 
     int i;
-    for (i = 0; i < length; i++) {
+    for (i = 0; i < size; i++) {
         printf("Введите %d член массива:\n", i+1);
         if (scanf("%d", &array[i]) != 1) {
             return EIO;
@@ -35,57 +35,57 @@ int scan_array(int *array, int length) {
     return 0;
 }
 
-int reverse_array(int* array, int length) {
-    if (array == NULL || length <= 0) {
+int reverse_array(int* array, int size) {
+    if (array == NULL || size <= 0) {
         return EINVAL;
     }
 
-    for (int i = 0; i < length/2; i++) {
-        int current = array[i];
+    for (int i = 0; i < size/2; i++) {
+        int temp = array[i];
 
-        array[i] = array[length - i - 1];
-        array[length - i - 1] = current;
+        array[i] = array[size - i - 1];
+        array[size - i - 1] = temp;
     }
     return 0;
 }
 
-int shift_array(int *array, int length, int shift_step) {
-    if (array == NULL || length <= 0) {
+int shift_array(int *array, int size, int shift_step) {
+    if (array == NULL || size <= 0) {
         return EINVAL;
     }
 
-    shift_step %= length;
+    shift_step %= size;
     if (shift_step < 0) {
-        shift_step += length;
+        shift_step += size;
     }
     if (shift_step == 0) {
         return 0;
     }
 
-    reverse_array(array, length);
+    reverse_array(array, size);
     reverse_array(array, shift_step);
-    reverse_array(array+shift_step, length-shift_step);
+    reverse_array(array+shift_step, size-shift_step);
     return 0;
 }
 
-int strange_sort (int *array, int length) {
-    if (array == NULL || length <= 0) {
+int strange_sort (int *array, int size) {
+    if (array == NULL || size <= 0) {
         return EINVAL;
     }
 
-    int lastest_changed = 0;
-    for (int i = 0; i < length; i++) {
+    int group_end = 0;
+    for (int i = 0; i < size; i++) {
         if (array[i] < 0) {
-            shift_array(array + lastest_changed, i - lastest_changed + 1, 1);
-            lastest_changed++;
+            shift_array(array + group_end, i - group_end + 1, 1);
+            group_end++;
         }
     }
 
 
-    for (int i = lastest_changed; i < length; i++) {
+    for (int i = group_end; i < size; i++) {
         if (array[i] == 0) {
-            shift_array(array + lastest_changed, i - lastest_changed + 1, 1);
-            lastest_changed++;
+            shift_array(array + group_end, i - group_end + 1, 1);
+            group_end++;
         }
     }
 
