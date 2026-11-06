@@ -10,5 +10,5 @@ stack.o: stack.c stack.h
 run: out
 	./out
 
-clear:
+clean:
 	rm -f *.o out

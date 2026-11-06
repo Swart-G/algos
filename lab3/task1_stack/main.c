@@ -74,7 +74,7 @@ int main(void) {
             break;
 
             case 2:
-            printf("Введите значение для записи в стек");
+            printf("Введите значение для записи в стек: ");
             err = scanf("%d", &value);
             if (err != 1) {
                 switch_error(-EIO);
