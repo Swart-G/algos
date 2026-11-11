@@ -10,12 +10,11 @@ typedef struct Stack {
     StackNode *top;
 } Stack;
 
-Stack *create_stack(void);
+Stack *stack_create(void);
 int stack_push(Stack *stack, int value);
 int stack_pop(Stack *stack, int *value);
 int stack_is_empty(Stack *stack);
 int stack_destroy(Stack *stack);
 int stack_print(Stack *stack);
-int test_stack(Stack *stack);
 
 #endif // ALGOS_STACK_H

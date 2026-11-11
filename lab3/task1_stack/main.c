@@ -30,14 +30,100 @@ void switch_error(int err) {
 
 
 
-int main(void) {
+static void handle_exit(int *running) {
+    printf("Выход из программы...\n");
+    *running = 0;
+}
 
-    int err, operation_id, value, res;
+static void handle_stack_create(Stack **stack, int *exit_code) {
+    if (*stack != NULL) {
+        printf("Стек уже создан\n");
+        return;
+    }
+
+    *stack = stack_create();
+    if (*stack == NULL) {
+        switch_error(-ENOMEM);
+        *exit_code = ENOMEM;
+    }
+}
+
+static void handle_stack_push(Stack *stack, int *exit_code) {
+    int value;
+    printf("Введите значение для записи в стек: ");
+    if (scanf("%d", &value) != 1) {
+        switch_error(-EIO);
+        *exit_code = EIO;
+        return;
+    }
+
+    int err = stack_push(stack, value);
+    if (err != 0) {
+        switch_error(err);
+    }
+}
+
+static void handle_stack_pop(Stack *stack) {
+    int value;
+    int err = stack_pop(stack, &value);
+    if (err == 0) {
+        printf("Удалённый элемент: %d\n", value);
+    } else {
+        switch_error(err);
+    }
+}
+
+static void handle_stack_is_empty(Stack *stack) {
+    int res = stack_is_empty(stack);
+    if (res < 0) {
+        switch_error(res);
+    } else if (res == 0) {
+        printf("Стек не пуст\n");
+    } else {
+        printf("Стек пуст\n");
+    }
+}
+
+static void handle_stack_print(Stack *stack) {
+    int err = stack_print(stack);
+    if (err != 0) {
+        switch_error(err);
+    }
+}
+
+static void handle_stack_autotest(void) {
+    Stack *test_stack = stack_create();
+    puts(test_stack != NULL ? "OK" : "FAIL");
+    if (test_stack == NULL) {
+        return;
+    }
+
+    int value = 0;
+    puts(stack_is_empty(test_stack) == 1 ? "OK" : "FAIL");
+    puts(stack_pop(test_stack, &value) == -ENOENT ? "OK" : "FAIL");
+    puts(stack_push(test_stack, 10) == 0 ? "OK" : "FAIL");
+    puts(stack_push(test_stack, 20) == 0 ? "OK" : "FAIL");
+    puts(stack_is_empty(test_stack) == 0 ? "OK" : "FAIL");
+    puts(stack_print(test_stack) == 0 ? "OK" : "FAIL");
+    puts(stack_pop(test_stack, &value) == 0 && value == 20 ? "OK" : "FAIL");
+    puts(stack_pop(test_stack, &value) == 0 && value == 10 ? "OK" : "FAIL");
+    puts(stack_is_empty(test_stack) == 1 ? "OK" : "FAIL");
+    puts(stack_destroy(test_stack) == 0 ? "OK" : "FAIL");
+}
+
+static void handle_unknown_command(void) {
+    printf("Неизвестная команда\n");
+}
+
+int main(void) {
+    int operation_id;
+    int running = 1;
+    int exit_code = 0;
     Stack *stack = NULL;
 
     printf("Task 1: Stack\n");
 
-    while (1) {
+    while (running && exit_code == 0) {
         printf("------------------------------------\n"
             "0 - Выход\n"
             "1 - Создать стек\n"
@@ -45,86 +131,43 @@ int main(void) {
             "3 - Извлечь элемент из стека (pop)\n"
             "4 - Проверка стека на пустоту\n"
             "5 - Вывод всех элементов стека\n"
-            "6 - Автопроверка\n"
+            "6 - Автотест\n"
             "Введите команду цифрой: ");
 
-
-        err = scanf("%d", &operation_id);
-        if (err != 1) {
+        if (scanf("%d", &operation_id) != 1) {
             switch_error(-EIO);
-            stack_destroy(stack);
-            return EIO;
+            exit_code = EIO;
+            break;
         }
 
         switch (operation_id) {
             case 0:
-            stack_destroy(stack);
-            return 0;
-
+                handle_exit(&running);
+                break;
             case 1:
-            if (stack == NULL) {
-                stack = create_stack();
-                if (stack == NULL) {
-                    printf("Ошибка выделения памяти\n");
-                    return ENOMEM;
-                }
-            } else {
-                printf("Стек уже создан\n");
-            }
-            break;
-
+                handle_stack_create(&stack, &exit_code);
+                break;
             case 2:
-            printf("Введите значение для записи в стек: ");
-            err = scanf("%d", &value);
-            if (err != 1) {
-                switch_error(-EIO);
-                stack_destroy(stack);
-                return EIO;
-            }
-            err = stack_push(stack, value);
-            if (err != 0) switch_error(err);
-            break;
-
+                handle_stack_push(stack, &exit_code);
+                break;
             case 3:
-            err = stack_pop(stack, &value);
-            if (err == 0) {
-                printf("Удалённый элемент: %d\n", value);
-            } else {
-                switch_error(err);
-            }
-            break;
-
+                handle_stack_pop(stack);
+                break;
             case 4:
-            res = stack_is_empty(stack);
-            if (res < 0) {
-                switch_error(res);
-            } else {
-                switch (res) {
-                case 0:
-                    printf("Стек не пуст\n");
-                    break;
-                case 1:
-                    printf("Стек пуст\n");
-                    break;
-                }
-            }
-            break;
-
+                handle_stack_is_empty(stack);
+                break;
             case 5:
-            err = stack_print(stack);
-            if (err != 0) {
-                switch_error(err);
-            }
-            break;
-
+                handle_stack_print(stack);
+                break;
             case 6:
-            test_stack(stack);
-            break;
-
+                handle_stack_autotest();
+                break;
             default:
-            printf("Неизвестная команда\n");
-            break;
+                handle_unknown_command();
+                break;
         }
     }
-    return 0;
+
+    stack_destroy(stack);
+    return exit_code;
 }
