@@ -53,8 +53,8 @@ int tree_insert(Tree *tree, int value) {
     return 0;
 }
 
-int tree_search(Tree *tree, int value, TreeNode **serched_node) {
-    if (tree == NULL || serched_node == NULL) {
+int tree_search(Tree *tree, int value, TreeNode **searched_node) {
+    if (tree == NULL || searched_node == NULL) {
         return -EINVAL;
     }
 
@@ -69,7 +69,7 @@ int tree_search(Tree *tree, int value, TreeNode **serched_node) {
             current_node = current_node->right;
         }
     }
-    *serched_node = current_node;
+    *searched_node = current_node;
 
     return 0;
 }
@@ -145,4 +145,24 @@ int tree_validate(TreeNode *node, TreeNode *lower, TreeNode *upper) {
     }
 
     return tree_validate(node->left, lower, node) || tree_validate(node->right, node, upper);
+}
+
+static void tree_destroy_nodes(TreeNode *node) {
+    if (node == NULL) {
+        return;
+    }
+
+    tree_destroy_nodes(node->left);
+    tree_destroy_nodes(node->right);
+    free(node);
+}
+
+int tree_destroy(Tree *tree) {
+    if (tree == NULL) {
+        return -EINVAL;
+    }
+
+    tree_destroy_nodes(tree->root);
+    free(tree);
+    return 0;
 }
