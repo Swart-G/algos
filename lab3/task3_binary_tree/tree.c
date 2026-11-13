@@ -99,23 +99,50 @@ int tree_delete(Tree *tree, TreeNode *node) {
     if (node->left == NULL && node->right == NULL) {
         *link = NULL;
         free(node);
+
     } else if (node->left != NULL && node->right != NULL) {
-
-
-        if (node->left != NULL) {
-            if (node->left > (*link)->left) {
-                node->left = (*link)->left;
-            }
+        TreeNode *current_node = node->right;
+        while (current_node->left != NULL) {
+            current_node = current_node->left;
         }
 
+        current_node->left = (*link)->left;
         *link = node->right;
         free(node);
+
     } else if (node->left != NULL && node->right == NULL) {
         *link = node->left;
         free(node);
+
     } else if (node->right != NULL && node->left == NULL) {
         *link = node->right;
         free(node);
     }
     return 0;
+}
+
+void tree_print_inorder(TreeNode *node) {
+    if (node == NULL) {
+        return;
+    }
+
+    tree_print_inorder(node->left);
+    printf("%d ", node->value);
+    tree_print_inorder(node->right);
+}
+
+// 1 при FALSE, 0 при TRUE
+int tree_validate(TreeNode *node, TreeNode *lower, TreeNode *upper) {
+    if (node == NULL) {
+        return 0;
+    }
+
+    if (lower != NULL && node->value <= lower->value) {
+        return 1;
+    }
+    if (upper != NULL && node->value > upper->value) {
+        return 1;
+    }
+
+    return tree_validate(node->left, lower, node) || tree_validate(node->right, node, upper);
 }

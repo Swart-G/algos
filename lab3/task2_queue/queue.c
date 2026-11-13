@@ -60,6 +60,7 @@ int queue_dequeue(Queue *queue, int *value) {
     return 0;
 }
 
+// 1 при FALSE, 0 при TRUE
 int queue_is_empty(Queue *queue) {
     if (queue == NULL || queue->head == NULL) {
         return 1;
